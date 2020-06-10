@@ -4,6 +4,7 @@
 "
 """
 import pytest
+import numpy as np
 from unittest import mock
 from watson_transformer.json_transformer import JSONTransformer
 
@@ -36,7 +37,7 @@ class TestJSONTransformer():
         mocked_service = mock_service()
         column_name = None
         # act
-        for column_name in [None, "", " ", "    "]:
+        for column_name in [None, "", " ", "    ", 0.1, np.float32(0.01)]:
             with pytest.raises(ValueError) as exception:
                 transformer = JSONTransformer(inputCol=column_name, 
                                           outputCol='output_column',
@@ -61,7 +62,7 @@ class TestJSONTransformer():
         mocked_service = mock_service()
         column_name = None
         # act
-        for column_name in [None, "", " ", "    "]:
+        for column_name in [None, "", " ", "    ", 0.1, np.float32(0.01)]:
             with pytest.raises(ValueError) as exception:
                 JSONTransformer(inputCol='input_column', 
                                 outputCol=column_name,
@@ -108,7 +109,7 @@ class TestJSONTransformer():
 
     def test_init_none_callable_service(self):
         # arrange
-        invalid_services = [None, 12, "12"]
+        invalid_services = [None, 12, "12", 12.0, True, False]
         # act
         for i in range(len(invalid_services)):
             with pytest.raises(ValueError) as exinfo:

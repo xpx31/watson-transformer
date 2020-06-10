@@ -106,7 +106,7 @@ class TestWatsonServiceTransformer():
     def test_init_max_workers_with_invalid_value(self, mock_service):
         # arrange
         mocked_service = mock_service()
-        max_workers = [None, "1", -1, 0, -100]
+        max_workers = [None, "1", -1, 0, -100, 0.1, -0.1]
         # act
         for i in range(len(max_workers)):
             with pytest.raises(ValueError) as exinfo:
@@ -157,7 +157,7 @@ class TestWatsonServiceTransformer():
 
     def test_init_none_callable_service(self):
         # arrange
-        values = [None, 12, "12"]
+        values = [None, 12, "12", 12.0, True, False]
         # act
         for i in range(len(values)):
             with pytest.raises(ValueError) as exinfo:
